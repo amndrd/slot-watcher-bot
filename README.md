@@ -9,12 +9,12 @@ config file; the bot walks through it on a schedule and messages you when someth
 ```
 🚨 SLOT AVAILABLE
 
-📍 ACT Schaerbeek — Theory exam Cat. B
+📍 Name — Description
 
 📅 21/08/2026 — 10:00, 12:00
 📅 08/09/2026 — 07:00, 09:00
 
-👉 Book now: https://examen.autocontrole.be
+👉 Book now: https://website
 ```
 
 ## Why a config file
