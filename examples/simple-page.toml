@@ -1,0 +1,23 @@
+# Simplest possible case: one page that already lists dates and times,
+# with no forms to fill in on the way.
+
+[telegram]
+token = "env:TELEGRAM_TOKEN"
+chat_id = "env:TELEGRAM_CHAT_ID"
+
+[watch]
+interval = "5min"
+scope = "month"
+year = 2026
+month = 9
+
+[site]
+name = "Example booking page"
+url = "https://example.com/availability"
+
+# No [[site.steps]] needed — the URL above already shows what we need.
+
+[parse]
+full_markers = ["Sold out", "Fully booked", "Unavailable"]
+require_times = true
+date_order = "dmy"

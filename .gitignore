@@ -1,0 +1,18 @@
+# Local configuration — may contain tokens or personal data
+config.toml
+*.local.toml
+
+# Test artifacts
+tests/__pycache__/
+
+# Runtime files
+.state/
+.debug/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/

@@ -1,0 +1,61 @@
+# ACT Belgium — driving theory exam (Cat. B), Schaerbeek/Evere centre.
+#
+# This is the real-world site this tool was built against, kept here as a
+# working reference for how to describe a multi-step booking flow.
+#
+#   export TELEGRAM_TOKEN='...'
+#   export TELEGRAM_CHAT_ID='...'
+#   export ID_CARD_EXPIRY='31/12/2030'
+#   slotwatcher run -c examples/act-schaerbeek.toml
+
+[telegram]
+token = "env:TELEGRAM_TOKEN"
+chat_id = "env:TELEGRAM_CHAT_ID"
+
+[watch]
+interval = "2min"
+scope = "all"
+desktop_notifications = true
+
+[site]
+name = "ACT Schaerbeek — Theory exam Cat. B"
+url = "https://examen.autocontrole.be"
+
+# 1. The ID form lives inside a Bootstrap modal that starts hidden, so the
+#    fields are in the DOM but invisible until this button is clicked.
+[[site.steps]]
+action = "click"
+selector = "button[data-target='#idModal']"
+
+# 2. Expiry date of your identity card, read from the environment.
+[[site.steps]]
+action = "fill"
+selector = "#ExpirationDate"
+value = "env:ID_CARD_EXPIRY"
+
+# 3. The checkbox is a styled Bootstrap control: the input itself is invisible
+#    and only its <label> is clickable. The "check" action handles that.
+[[site.steps]]
+action = "check"
+selector = "#defaultCheck1"
+
+[[site.steps]]
+action = "click"
+selector = "#btnConfirmID"
+navigates = true
+
+# 4. Each exam category is its own <form> whose trigger is an
+#    <input type="submit">, not a button or a link — hence "click_in".
+[[site.steps]]
+action = "click_in"
+container = "form"
+contains = "Cat. B - AM - A1 - A2 - A"
+selector = "input[type=submit]"
+navigates = true
+
+[parse]
+# Skip the long legal notice above the calendar, which contains dates of its own.
+start_marker = "Selecteer een tijdstip"
+full_markers = ["Volzet", "Complet"]
+require_times = true
+date_order = "dmy"
